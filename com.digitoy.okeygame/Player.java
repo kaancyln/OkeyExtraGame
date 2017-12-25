@@ -56,9 +56,6 @@ public class Player {
                     }
                 }
                 Hand hand = this.okeyExtra.play(joker, playerTiles);
-                if (hand.getFreeTilesList().size() + hand.getSeriesList().size() + hand.getPairsList().size() < 14) {
-                    System.out.println(hand.getFreeTilesList().size() + hand.getSeriesList().size() + hand.getPairsList().size() + "555555");
-                }
                 discardTile(gameUtil, hand);
             }
         } else {
@@ -67,30 +64,19 @@ public class Player {
     }
 
     private void discardTile(GameUtil gameUtil, Hand hand) throws Exception {
-        if (hand.getFreeTilesList().size() + hand.getSeriesList().size() + hand.getPairsList().size() < 14) {
-            System.out.println(hand.getFreeTilesList().size() + hand.getSeriesList().size() + hand.getPairsList().size() + "AAAAAAAAAAAAAA");
-        }
         List<Tile> freeTiles = hand.getFreeTilesList();
         if (freeTiles.isEmpty()) {
-            // TODO decide which set or run should be discarded.
             gameUtil.discardTile(this.playerIndex, (Tile) ((List) (hand.getSeriesList().toArray()[0])).get(0));
         } else {
             if (freeTiles.size() == 1) {
                 System.out.println("Winner player is : Player" + gameUtil.getTurn() + " with hand : " + hand);
                 throw new Exception("Game is finished");
             } else {
-                // TODO decide which free tile to discard.
-                if (hand.getFreeTilesList().size() + hand.getSeriesList().size() + hand.getPairsList().size() < 14) {
-                    System.out.println(hand.getFreeTilesList().size() + hand.getSeriesList().size() + hand.getPairsList().size() + "BBBBBBBBBBBBBBBBBBBBBBBB");
-                }
                 gameUtil.discardTile(this.playerIndex, freeTiles.get(0));
                 hand.getFreeTilesList().remove(freeTiles.get(0));
-                if (hand.getFreeTilesList().size() + hand.getSeriesList().size() + hand.getPairsList().size() < 14) {
-                    System.out.println(hand.getFreeTilesList().size() + hand.getSeriesList().size() + hand.getPairsList().size() + "CCCCCCCCCCCCCCCCCCCCCC");
-                }
             }
         }
-        System.out.println("Hand player " + (gameUtil.getTurn() - 1) + " " + hand.toString());
+        System.out.println("Hand player " + (gameUtil.getTurn()) + " " + hand);
     }
 
     public static class Hand {
@@ -129,18 +115,17 @@ public class Player {
         public String toString() {
             StringBuilder sb = new StringBuilder();
             sb.append("Hand : ");
-            if (seriesList.size() > 0) {
-                for (int i = 0; i < seriesList.get(0).size(); i++) {
-                    sb.append(seriesList.get(0).get(i).getTileColor().toString() + seriesList.get(0).get(0).getTileValue()).append(", ");
-                }
+            for(List<Tile> serie :  seriesList) {
+                sb.append(serie).append(", ");
             }
 
             if (pairsList.size() > 1) {
                 sb.append(pairsList.toString());
             }
             if (freeTilesList.size() > 0) {
+                sb.append("------ Free Tile :");
                 for (int i = 0; i < freeTilesList.size(); i++) {
-                    sb.append(freeTilesList.get(i).getTileColor().toString() + freeTilesList.get(i).getTileValue()).append(", ");
+                    sb.append(freeTilesList.get(i).getTileColor().toString() + freeTilesList.get(i).getTileValue()).append(",");
                 }
             }
 

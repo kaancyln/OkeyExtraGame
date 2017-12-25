@@ -33,7 +33,7 @@ public class GameUtil {
         StringBuilder sb = new StringBuilder();
         if (playerTilesList.size() > 0) {
             for (int i = 0; i < playerTilesList.size(); i++) {
-                sb.append("Player " + i + " s hand : ");
+                sb.append("Player " + i + " s hand("+playerTilesList.get(i).size()+") : ");
                 for (int j = 0; j < playerTilesList.get(i).size(); j++) {
                     sb = sb.append(playerTilesList.get(i).get(j).getTileColor().toString() + playerTilesList.get(i).get(j).getTileValue()).append(", ");
 
